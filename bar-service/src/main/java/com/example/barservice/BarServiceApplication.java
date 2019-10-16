@@ -32,12 +32,11 @@ public class BarServiceApplication {
     }
 
     @GetMapping("/bar-failed")
-    public ResponseEntity<Map<String, Object>> failWithStatus200() {
-        Map<String, Object> body = new LinkedHashMap();
-        body.put("timestamp", new Date());
-        body.put("message", "something went wrong");
-        body.put("status", 500);
-        return new ResponseEntity<>(body, HttpStatus.OK);
+    public Error failWithStatus200() {
+        Error error = new Error();
+        error.setMessage("something went wrong");
+        error.setStatus(500);
+        return error;
     }
 
     @GetMapping("/bar-success")
@@ -55,6 +54,12 @@ public class BarServiceApplication {
     @Data
     static class Bar {
         String value;
+    }
+
+    @Data
+    static class Error {
+        String message;
+        int status;
     }
 
 }
