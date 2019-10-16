@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.ConnectException;
+import java.util.Map;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -22,17 +23,38 @@ public class FooController {
         this.barServiceClient = barServiceClient;
     }
 
-    @GetMapping("/foo")
-    public String foo() {
-        String barResponse = barServiceClient.bar();
-        log.info("bar-service response: {}", barResponse);
-        return "foo-service:" + barResponse;
+    @GetMapping("/ok")
+    String foo() {
+        String response = barServiceClient.ok();
+        log.info("bar-service response: {}", response);
+        return "foo-service:" + response;
     }
 
-    @GetMapping("/foo/{id}")
-    public String error(@PathVariable String id) {
-        String response = barServiceClient.single(id);
-        return "foo-service with error:" + response;
+    @GetMapping("/fail")
+    String fail() {
+        String response = barServiceClient.fail();
+        log.info("bar-service response: {}", response);
+        return "foo-service:" + response;
+    }
+
+    @GetMapping("/bar-sucecss")
+    String barSuccess() {
+        Bar response = barServiceClient.barSuccess();
+        log.info("bar-service response: {}", response);
+        return "foo-service:" + response;
+    }
+
+    @GetMapping("/bar-failed")
+    String barFailed() {
+        Bar response = barServiceClient.barFailed();
+        log.info("bar-service response: {}", response);
+        return "foo-service:" + response;
+    }
+
+    @GetMapping("/{id}")
+    public String one(@PathVariable String id) {
+        String response = barServiceClient.one(id);
+        return "foo-service:" + (response == null ? "" : response);
     }
 
     @ExceptionHandler(value = {ConnectException.class, FeignException.class})
