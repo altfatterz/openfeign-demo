@@ -1,20 +1,23 @@
 server:
   port: 8080
 
-bar:
+bar-service:
   ribbon:
     listOfServers: localhost:8081
 
-
 feign.client.config:
-  bar:
+  bar-service:
     loggerLevel: full
-    errorDecoder: com.example.fooservice.SimpleErrorDecoder
+#    errorDecoder: com.example.fooservice.SimpleErrorDecoder
+    encoder: com.example.fooservice.SimpleEncoder
+    decoder: com.example.fooservice.SimpleDecoder
     requestInterceptors:
-#    - com.example.fooservice.FooRequestInterceptor
+#     - com.example.fooservice.FooRequestInterceptor
 
 logging:
   level:
     feign: trace
 
-
+feign:
+  client:
+    config:
