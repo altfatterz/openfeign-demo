@@ -203,6 +203,20 @@ feign.client.config:
     loggerLevel: full
 ```
 
+and in the logs
+
+```bash
+2019-10-17 14:11:41.641 DEBUG 67686 --- [nio-8080-exec-7] com.example.fooservice.BarServiceClient  : [BarServiceClient#failWithStatusNon200] ---> GET http://bar-service/failure-with-status-non-200 HTTP/1.1
+2019-10-17 14:11:41.641 DEBUG 67686 --- [nio-8080-exec-7] com.example.fooservice.BarServiceClient  : [BarServiceClient#failWithStatusNon200] ---> END HTTP (0-byte body)
+2019-10-17 14:11:41.647 DEBUG 67686 --- [nio-8080-exec-7] com.example.fooservice.BarServiceClient  : [BarServiceClient#failWithStatusNon200] <--- HTTP/1.1 500 (6ms)
+2019-10-17 14:11:41.648 DEBUG 67686 --- [nio-8080-exec-7] com.example.fooservice.BarServiceClient  : [BarServiceClient#failWithStatusNon200] connection: close
+2019-10-17 14:11:41.648 DEBUG 67686 --- [nio-8080-exec-7] com.example.fooservice.BarServiceClient  : [BarServiceClient#failWithStatusNon200] content-type: application/json
+2019-10-17 14:11:41.648 DEBUG 67686 --- [nio-8080-exec-7] com.example.fooservice.BarServiceClient  : [BarServiceClient#failWithStatusNon200] date: Thu, 17 Oct 2019 12:11:41 GMT
+2019-10-17 14:11:41.648 DEBUG 67686 --- [nio-8080-exec-7] com.example.fooservice.BarServiceClient  : [BarServiceClient#failWithStatusNon200] transfer-encoding: chunked
+2019-10-17 14:11:41.648 DEBUG 67686 --- [nio-8080-exec-7] com.example.fooservice.BarServiceClient  : [BarServiceClient#failWithStatusNon200] 
+2019-10-17 14:11:41.648 DEBUG 67686 --- [nio-8080-exec-7] com.example.fooservice.BarServiceClient  : [BarServiceClient#failWithStatusNon200] {"message":"something went wrong again","status":500}
+2019-10-17 14:11:41.649 DEBUG 67686 --- [nio-8080-exec-7] com.example.fooservice.BarServiceClient  : [BarServiceClient#failWithStatusNon200] <--- END HTTP (53-byte body)
+```
 
 
 Resources

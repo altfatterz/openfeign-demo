@@ -3,6 +3,7 @@ package com.example.fooservice;
 import feign.FeignException;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,9 +31,7 @@ public class FooController {
     Foo success() {
         Bar response = barServiceClient.success();
         log.info("bar-service response: {}", response);
-        Foo foo = new Foo();
-        foo.setId(UUID.randomUUID().toString());
-        foo.setBarValue(response.getValue());
+        Foo foo = new Foo(UUID.randomUUID().toString(), response.getValue());
         return foo;
     }
 
@@ -40,9 +39,7 @@ public class FooController {
     Foo handleFailureWithStatus200() {
         Bar response = barServiceClient.failWithStatus200();
         log.info("bar-service response: {}", response);
-        Foo foo = new Foo();
-        foo.setId(UUID.randomUUID().toString());
-        foo.setBarValue(response.getValue());
+        Foo foo = new Foo(UUID.randomUUID().toString(), response.getValue());
         return foo;
     }
 
@@ -50,9 +47,7 @@ public class FooController {
     Foo handleFailureWithStatusNon200() {
         Bar response = barServiceClient.failWithStatusNon200();
         log.info("bar-service response: {}", response);
-        Foo foo = new Foo();
-        foo.setId(UUID.randomUUID().toString());
-        foo.setBarValue(response.getValue());
+        Foo foo = new Foo(UUID.randomUUID().toString(), response.getValue());
         return foo;
     }
 
@@ -60,13 +55,11 @@ public class FooController {
     public Foo decode404(@PathVariable String id) {
         String response = barServiceClient.decode404(id);
         log.info("bar-service response: {}", response);
-        Foo foo = new Foo();
-        foo.setId(UUID.randomUUID().toString());
-        foo.setBarValue(response);
+        Foo foo = new Foo(UUID.randomUUID().toString(), "default value");
         return foo;
     }
 
-    @ExceptionHandler(value = {ConnectException.class, FeignException.class})
+    @ExceptionHandler(value = {ConnectException.class, FeignException.class, IllegalArgumentException.class})
     void handleDownstreamServiceException(HttpServletRequest request, HttpServletResponse response, Exception e) throws IOException {
         String message = "endpoint: " + request.getRequestURL() + " could not produce result because: " + e.getMessage();
         log.error(message);
@@ -77,6 +70,13 @@ public class FooController {
     static class Foo {
         String id;
         String barValue;
+
+        //@JsonCreator
+        public Foo(String id, String barValue) {
+            Assert.hasLength(barValue, "barValue cannot be empty");
+            this.id = id;
+            this.barValue = barValue;
+        }
     }
 
 }
