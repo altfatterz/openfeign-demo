@@ -21,17 +21,14 @@ public class BarServiceApplication {
         SpringApplication.run(BarServiceApplication.class, args);
     }
 
-    @GetMapping("/ok")
-    public String ok() {
-        return "Hello, I am the bar-service";
+    @GetMapping("/success")
+    public Bar bar() {
+        Bar bar = new Bar();
+        bar.setValue("hello");
+        return bar;
     }
 
-    @GetMapping("/fail")
-    public void fail() {
-        throw new RuntimeException("boom");
-    }
-
-    @GetMapping("/bar-failed")
+    @GetMapping("/failure-with-status-200")
     public Error failWithStatus200() {
         Error error = new Error();
         error.setMessage("something went wrong");
@@ -39,11 +36,12 @@ public class BarServiceApplication {
         return error;
     }
 
-    @GetMapping("/bar-success")
-    public Bar bar() {
-        Bar bar = new Bar();
-        bar.setValue("hello");
-        return bar;
+    @GetMapping("/failure-with-status-non-200")
+    public ResponseEntity<Error> failWithStatusNon200() {
+        Error error = new Error();
+        error.setMessage("something went wrong again");
+        error.setStatus(500);
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @GetMapping("/bar/{id}")

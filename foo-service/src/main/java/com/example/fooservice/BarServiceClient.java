@@ -8,23 +8,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient("bar-service")
 interface BarServiceClient {
 
-    @GetMapping("/ok")
-    String ok();
+    @GetMapping("/success")
+    Bar success();
 
-    @GetMapping("/fail")
-    String fail();
+    @GetMapping("/failure-with-status-200")
+    Bar failWithStatus200();
 
-    @GetMapping("/bar-failed")
-    Bar barFailed();
-
-    @GetMapping("/bar-success")
-    Bar barSuccess();
+    @GetMapping("/failure-with-status-non-200")
+    Bar failWithStatusNon200();
 
     @GetMapping("/bar/{id}")
-    String one(@PathVariable String id);
+    String decode404(@PathVariable String id);
 }
 
 @Data
 class Bar {
     String value;
 }
+

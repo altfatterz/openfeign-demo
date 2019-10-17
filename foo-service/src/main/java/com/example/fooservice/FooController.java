@@ -27,22 +27,8 @@ public class FooController {
     }
 
     @GetMapping("/success")
-    String success() {
-        String response = barServiceClient.ok();
-        log.info("bar-service response: {}", response);
-        return "foo-service:" + response;
-    }
-
-    @GetMapping("/failure")
-    String failure() {
-        String response = barServiceClient.fail();
-        log.info("bar-service response: {}", response);
-        return "foo-service:" + response;
-    }
-
-    @GetMapping("/foo-success")
-    Foo fooSuccess() {
-        Bar response = barServiceClient.barSuccess();
+    Foo success() {
+        Bar response = barServiceClient.success();
         log.info("bar-service response: {}", response);
         Foo foo = new Foo();
         foo.setId(UUID.randomUUID().toString());
@@ -50,9 +36,19 @@ public class FooController {
         return foo;
     }
 
-    @GetMapping("/foo-failure")
-    Foo fooFailure() {
-        Bar response = barServiceClient.barFailed();
+    @GetMapping("/failure-with-status-200")
+    Foo handleFailureWithStatus200() {
+        Bar response = barServiceClient.failWithStatus200();
+        log.info("bar-service response: {}", response);
+        Foo foo = new Foo();
+        foo.setId(UUID.randomUUID().toString());
+        foo.setBarValue(response.getValue());
+        return foo;
+    }
+
+    @GetMapping("/failure-with-status-non-200")
+    Foo handleFailureWithStatusNon200() {
+        Bar response = barServiceClient.failWithStatusNon200();
         log.info("bar-service response: {}", response);
         Foo foo = new Foo();
         foo.setId(UUID.randomUUID().toString());
@@ -61,8 +57,8 @@ public class FooController {
     }
 
     @GetMapping("/decode404/{id}")
-    public Foo one(@PathVariable String id) {
-        String response = barServiceClient.one(id);
+    public Foo decode404(@PathVariable String id) {
+        String response = barServiceClient.decode404(id);
         log.info("bar-service response: {}", response);
         Foo foo = new Foo();
         foo.setId(UUID.randomUUID().toString());
