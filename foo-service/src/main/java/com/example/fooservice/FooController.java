@@ -71,7 +71,6 @@ public class FooController {
         String id;
         String barValue;
 
-        //@JsonCreator
         public Foo(String id, String barValue) {
             Assert.hasLength(barValue, "barValue cannot be empty");
             this.id = id;
