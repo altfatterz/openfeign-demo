@@ -46,7 +46,7 @@ public class BarServiceApplication {
         return bar;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/bar/{id}")
     public ResponseEntity<?> notFound(@PathVariable String id) {
         return new ResponseEntity(HttpStatus.NOT_FOUND);
     }

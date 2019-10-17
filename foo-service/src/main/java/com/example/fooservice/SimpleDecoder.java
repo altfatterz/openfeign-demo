@@ -10,10 +10,9 @@ import java.lang.reflect.Type;
 @Slf4j
 public class SimpleDecoder extends Default {
 
-    // whey is Type for bar-success a String and for /bar-failed com.example.fooservice.Bar ???
     @Override
     public Object decode(Response response, Type type) throws IOException {
-        log.info("SimpleDecoder called...");
+        log.info("SimpleDecoder with type: {}", type.getTypeName());
         return super.decode(response, type);
     }
 }

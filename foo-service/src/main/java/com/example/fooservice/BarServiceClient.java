@@ -1,10 +1,9 @@
 package com.example.fooservice;
 
+import lombok.Data;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
-import java.util.Map;
 
 @FeignClient("bar-service")
 interface BarServiceClient {
@@ -21,10 +20,11 @@ interface BarServiceClient {
     @GetMapping("/bar-success")
     Bar barSuccess();
 
-    @GetMapping("/{id}")
+    @GetMapping("/bar/{id}")
     String one(@PathVariable String id);
 }
 
+@Data
 class Bar {
     String value;
 }
