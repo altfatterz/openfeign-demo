@@ -59,7 +59,8 @@ Content-Length: 0
 Date: Thu, 17 Oct 2019 11:26:35 GMT
 ```
 
-Let's image we have to integrate with the above legacy service. How can we correct the above legacy service API design issues and provide a better contract with the new service (`foo-service`)
+Let's image we have to integrate with the above legacy service. How can we correct the above legacy service API design issues and provide a better contract with the new service (`foo-service`).
+
 We are using [OpenFeign](https://github.com/OpenFeign/feign)
 
 ```java
@@ -249,5 +250,4 @@ and in the logs
 Resources
 
 
-
-1. https://github.com/OpenFeign/feign/issues/776
+1. https://spring.io/projects/spring-cloud-openfeign
