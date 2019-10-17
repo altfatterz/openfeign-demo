@@ -8,8 +8,6 @@ bar-service:
 feign.client.config:
   bar-service:
     loggerLevel: full
-    #    errorDecoder: com.example.fooservice.SimpleErrorDecoder
-#    decoder: com.example.fooservice.SimpleDecoder
     decode404: true
     requestInterceptors:
      - com.example.fooservice.FooRequestInterceptor
@@ -17,7 +15,3 @@ feign.client.config:
 logging:
   level:
     com.example.fooservice.BarServiceClient: debug
-
-feign:
-  client:
-    config:

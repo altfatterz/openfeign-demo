@@ -9,6 +9,6 @@ public class FooRequestInterceptor implements RequestInterceptor {
 
     @Override
     public void apply(RequestTemplate requestTemplate) {
-        log.debug("interceptor: {} {}", requestTemplate.request().httpMethod(), requestTemplate.request().url());
+        log.info("interceptor: {} {}", requestTemplate.request().httpMethod(), requestTemplate.request().url());
     }
 }
